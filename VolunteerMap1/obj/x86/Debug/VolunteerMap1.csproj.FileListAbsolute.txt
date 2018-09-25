@@ -44,3 +44,4 @@ C:\Users\Admin\Documents\Visual Studio 2015\Projects\VolunteerMap1\VolunteerMap1
 C:\Users\Admin\Documents\Visual Studio 2015\Projects\VolunteerMap1\VolunteerMap1\bin\Debug\ESRI.ArcGIS.DataSourcesNetCDF.xml
 C:\Users\Admin\Documents\Visual Studio 2015\Projects\VolunteerMap1\VolunteerMap1\bin\Debug\ESRI.ArcGIS.GeoAnalyst.xml
 C:\Users\Admin\Documents\Visual Studio 2015\Projects\VolunteerMap1\VolunteerMap1\obj\x86\Debug\VolunteerMap1.MainForm.resources
+C:\Users\Admin\documents\visual studio 2015\Projects\VolunteerMap1\VolunteerMap1\obj\x86\Debug\VolunteerMap1.Form_Log.resources

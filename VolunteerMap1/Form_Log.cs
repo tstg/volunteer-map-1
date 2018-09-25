@@ -84,15 +84,16 @@ namespace VolunteerMap1
                     MessageBox.Show("用户名或密码不匹配！");
                     return;
                 }
-                DialogResult = DialogResult.OK;
-                this.Close();
+
+                Program.form = Program.mainForm;
+                Hide();
             }
         }
              
         public void button_Visitor_Click(object sender, EventArgs e) // 进入游客模式
         {
-            DialogResult = DialogResult.OK;
-            Close();
+            Hide();
+            Program.form = Program.mainForm;
             flag = 1;
         }
 
@@ -123,8 +124,8 @@ namespace VolunteerMap1
             ER.idData.Add(User.name);
             ER.idData.Add(User.password);
             ER.Fields.Add("PassWord");
-            GdpDrive Gdp = new GdpDrive();
-            Gdp.Query(ref ER);
+            
+            Program.gdbDrive.Query(ref ER);
             if (ER.array.Count > 0)
                 return true;
             else

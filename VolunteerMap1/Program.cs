@@ -7,6 +7,11 @@ namespace VolunteerMap1
 {
     static class Program
     {
+        public static Form form;
+        public static Form_Log form_log;
+        public static MainForm mainForm;
+        public static GdbDrive gdbDrive;
+
         private static LicenseInitializer m_AOLicenseInitializer = new VolunteerMap1.LicenseInitializer();
 
         /// <summary>
@@ -23,23 +28,39 @@ namespace VolunteerMap1
             //ESRI License Initializer generated code.
             //Do not make any call to ArcObjects after ShutDownApplication()
             m_AOLicenseInitializer.ShutdownApplication();
-            Form_Log f1 = new Form_Log();
-            f1.ShowDialog();
-            while (true)
+
+            //Form_Log f1 = new Form_Log();
+            //f1.ShowDialog();
+
+            //while (true)
+            //{
+            //    MainForm newform = new MainForm(ref f1);
+
+            //    // 打开主窗口
+            //    if (f1.DialogResult == DialogResult.OK)
+            //    {
+            //        newform.ShowDialog();
+            //    }
+
+            //    // 打开登录窗口
+            //    if (newform.DialogResult == DialogResult.OK)
+            //    {
+            //        f1.ShowDialog();
+            //    }   
+            //}
+
+            gdbDrive = new GdbDrive();
+
+            form_log = new Form_Log();
+            mainForm = new MainForm(ref form_log);
+
+            form = form_log;
+
+            while (form.DialogResult != DialogResult.Cancel)
             {
-                MainForm newform = new MainForm(ref f1);
-                // 打开主窗口
-                if (f1.DialogResult == DialogResult.OK)
-                {
-                    newform.ShowDialog();
-                }
-                
-                // 打开登录窗口
-                if (newform.DialogResult == DialogResult.OK)
-                {
-                    f1.ShowDialog();
-                }
+                form.ShowDialog();
             }
+            
         }
     }
 }

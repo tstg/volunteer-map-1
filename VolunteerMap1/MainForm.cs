@@ -30,7 +30,7 @@ namespace VolunteerMap1
         TextBox proID;       // 支教活动ID
 
         IFeature pfeature;
-        GdpDrive Gdp = new GdpDrive();
+        GdbDrive gdb = Program.gdbDrive;
         IFeatureClass pFeatureClass;
         long SiteID = -1;
 
@@ -75,8 +75,8 @@ namespace VolunteerMap1
         private void VisualToView(string DatasetName, IMap axpMap,bool Selectable)
         {
             //将地理数据集转化为地理要素
-            if (Gdp.GetDataset(DatasetName) is IFeatureClass)
-                pFeatureClass = (IFeatureClass)Gdp.GetDataset(DatasetName);
+            if (gdb.GetDataset(DatasetName) is IFeatureClass)
+                pFeatureClass = (IFeatureClass)gdb.GetDataset(DatasetName);
             ////新建工作空间
             //IFeatureWorkspace pFeatWorkspace;
             //pFeatWorkspace = pWorkspaceFactory.Open(pPropertyset, 0) as IFeatureWorkspace;
@@ -208,7 +208,7 @@ namespace VolunteerMap1
             ER.Fields.Add("ActEnd");
             ER.Fields.Add("Describe");
             ER.Fields.Add("TID");
-            Gdp.Query(ref ER);
+            gdb.Query(ref ER);
             if (ER.array.Count < 1)
                 return null;
 
@@ -228,7 +228,7 @@ namespace VolunteerMap1
                 ERa.Fields.Clear();
                 ERa.Fields.Add("SID");
                 ERa.array.Clear();
-                Gdp.Query(ref ERa);
+                gdb.Query(ref ERa);
 
                 //获取地点名称
                 ERs.TableName = "site";
@@ -239,7 +239,7 @@ namespace VolunteerMap1
                 ERs.Fields.Clear();
                 ERs.Fields.Add("Name");
                 ERs.array.Clear();
-                Gdp.Query(ref ERs);
+                gdb.Query(ref ERs);
 
                 //根据活动信息中的TID，查询对应的OID;
                 ERo.TableName = "OANexus";
@@ -250,7 +250,7 @@ namespace VolunteerMap1
                 ERo.Fields.Clear();
                 ERo.Fields.Add("OID");
                 ERo.array.Clear();
-                Gdp.Query(ref ERo);
+                gdb.Query(ref ERo);
 
                 //根据查询到的OID，获取组织名称
                 ERg.TableName = "organizer";
@@ -261,7 +261,7 @@ namespace VolunteerMap1
                 ERg.Fields.Clear();
                 ERg.Fields.Add("FullName");
                 ERg.array.Clear();
-                Gdp.Query(ref ERg);
+                gdb.Query(ref ERg);
 
                 List<dynamic> ar = new List<dynamic>();
                 ar.Add(ER.array[i][4]);
@@ -333,13 +333,13 @@ namespace VolunteerMap1
                 return;
 
             SiteID = (dynamic)pfeature.get_Value(0);
-            GdpDrive Gdp = new GdpDrive();
+            //GdbDrive Gdp = new GdbDrive();
             Searcher GDs = new Searcher();
             GDs.TableName = "SANexus";
             GDs.idField.Add("SID");
             GDs.idData.Add(SiteID);
             GDs.Fields.Add("TID");
-            Gdp.Query(ref GDs);
+            gdb.Query(ref GDs);
 
             if(GDs.array.Count < 1)
             {
@@ -405,8 +405,8 @@ namespace VolunteerMap1
                 pJudge.idData.Add(TTID);
                 pJudge.Fields.Add("TID");
 
-                GdpDrive Gdp = new GdpDrive();
-                Gdp.Query(ref pJudge);
+                //GdbDrive Gdp = new GdbDrive();
+                gdb.Query(ref pJudge);
 
                 if (pJudge.array.Count > 0)
                 {
@@ -414,7 +414,7 @@ namespace VolunteerMap1
                     return;
                 }
 
-                Gdp.AddTableRecord("PANexus",pJudge.idData);
+                gdb.AddTableRecord("PANexus",pJudge.idData);
                 MessageBox.Show("报名成功！");
             }
           
@@ -424,7 +424,7 @@ namespace VolunteerMap1
         // 退出按键
         private void button_LogOut_Click(object sender, EventArgs e)
         {
-            DialogResult = DialogResult.OK;
+            
             Close();
         }
 
@@ -457,14 +457,14 @@ namespace VolunteerMap1
 
         private void AddOrgButt_Click(object sender, EventArgs e)
         {
-            GdpDrive Gdp = new GdpDrive();
+            //GdbDrive Gdp = new GdbDrive();
             Searcher SER = new Searcher();
 
             SER.TableName = "organizer";
             SER.idField.Add("OID");
             SER.idData.Add(orgInfoGrid.Rows[0].Cells[0].Value);
             SER.Fields.Add("OID");
-            Gdp.Query(ref SER);
+            gdb.Query(ref SER);
             if(SER.array.Count > 0)
             {
                 MessageBox.Show("该组织已存在！");
@@ -477,7 +477,7 @@ namespace VolunteerMap1
                 values.Add(orgInfoGrid.Rows[0].Cells[i].Value);
             }
             
-            Gdp.AddTableRecord("organizer",values);
+            gdb.AddTableRecord("organizer",values);
             MessageBox.Show("添加成功！");
         }
 
@@ -509,14 +509,14 @@ namespace VolunteerMap1
 
         private void AddStudentButt_Click(object sender, EventArgs e)
         {
-            GdpDrive Gdp = new GdpDrive();
+            //GdbDrive gdb = new GdbDrive();
             Searcher SER = new Searcher();
 
             SER.TableName = "participant";
             SER.idField.Add("PID");
             SER.idData.Add(studentInfoGrid.Rows[0].Cells[0].Value);
             SER.Fields.Add("PID");
-            Gdp.Query(ref SER);
+            gdb.Query(ref SER);
             if (SER.array.Count > 0)
             {
                 MessageBox.Show("该学生已存在！");
@@ -530,7 +530,7 @@ namespace VolunteerMap1
                 values.Add(studentInfoGrid.Rows[0].Cells[i].Value);
             }
 
-            Gdp.AddTableRecord("participant",values);
+            gdb.AddTableRecord("participant",values);
             MessageBox.Show("添加成功！");
         }
 
@@ -560,7 +560,7 @@ namespace VolunteerMap1
 
         private void AddProButt_Click(object sender, EventArgs e)
         {
-            GdpDrive Gdp = new GdpDrive();
+            //GdbDrive Gdp = new GdbDrive();
             Searcher SER = new Searcher();
             List<dynamic> values = new List<dynamic>();
 
@@ -574,7 +574,7 @@ namespace VolunteerMap1
             SER.idField.Add("SID");
             SER.idData.Add(SiteID);
             SER.Fields.Add("TID");
-            Gdp.Query(ref SER);
+            gdb.Query(ref SER);
             if(SER.array.Count > 0)
             {
                 MessageBox.Show("该地已有活动！");
@@ -583,7 +583,7 @@ namespace VolunteerMap1
 
             SER.idField[0] = "TID";
             SER.idData[0] = Convert.ToString(proInfoGrid.Rows[0].Cells[0].Value);
-            Gdp.Query(ref SER);
+            gdb.Query(ref SER);
             if (SER.array.Count > 0)
             {
                 MessageBox.Show("该活动ID已存在！");
@@ -597,7 +597,7 @@ namespace VolunteerMap1
             values.Clear();
             for (int i = 0; i < 5; i++)
                 values.Add(proInfoGrid.Rows[0].Cells[i].Value);
-            try { Gdp.AddTableRecord("Activity", values);}
+            try { gdb.AddTableRecord("Activity", values);}
             catch
             {
                 MessageBox.Show("日期格式有误！");
@@ -607,12 +607,12 @@ namespace VolunteerMap1
             values.Clear();
             values.Add(proInfoGrid.Rows[0].Cells[0].Value);
             values.Add(SiteID);
-            Gdp.AddTableRecord("SANexus",values);
+            gdb.AddTableRecord("SANexus",values);
 
             values.Clear();
             values.Add(logForm.textBox_User.Text);
             values.Add(proInfoGrid.Rows[0].Cells[0].Value);
-            Gdp.AddTableRecord("OANexus", values);
+            gdb.AddTableRecord("OANexus", values);
         }
 
         private void 地理位置ToolStripMenuItem_Click(object sender, EventArgs e)
@@ -650,13 +650,13 @@ namespace VolunteerMap1
                 return;
             }
             
-            GdpDrive Gdp = new GdpDrive();
-            Gdp.AddPointFeature("site",Convert.ToSingle(locationGrid.Rows[0].Cells[0].Value), Convert.ToSingle(locationGrid.Rows[0].Cells[1].Value));
+            //GdbDrive Gdp = new GdbDrive();
+            gdb.AddPointFeature("site",Convert.ToSingle(locationGrid.Rows[0].Cells[0].Value), Convert.ToSingle(locationGrid.Rows[0].Cells[1].Value));
             List<string> fields = new List<string>();
             fields.Add("Name");
             List<dynamic> datas = new List<dynamic>();
             datas.Add(Convert.ToString(locationGrid.Rows[0].Cells[2].Value)); 
-            Gdp.ChangeTableRecord("site","Name",null,fields,datas);
+            gdb.ChangeTableRecord("site","Name",null,fields,datas);
             axMapControl_Main.ActiveView.Refresh();
             MessageBox.Show("添加成功");
         }
@@ -699,14 +699,14 @@ namespace VolunteerMap1
 
         private void RewriteOrgButt_Click(object sender, EventArgs e)
         {
-            GdpDrive Gdp = new GdpDrive();
+            //GdbDrive Gdp = new GdbDrive();
             List<string> fields = new List<string>();
             List<dynamic> value = new List<dynamic>();
 
             value.Add(orgNowName.Text.ToString());
             fields.Add("FullName");
 
-            bool Judge = Gdp.ChangeTableRecord("organizer","FullName",orgPreName.Text.ToString(),fields,value);
+            bool Judge = gdb.ChangeTableRecord("organizer","FullName",orgPreName.Text.ToString(),fields,value);
             if (Judge)
                 MessageBox.Show("修改成功！");
             else
@@ -754,7 +754,7 @@ namespace VolunteerMap1
         private void RewriteProButt_Click(object sender, EventArgs e)
         {
             bool T = false;
-            GdpDrive Gdp = new GdpDrive();
+            //GdbDrive Gdp = new GdbDrive();
 
             List<string> idfields = new List<string>();
             List<dynamic> iddata = new List<dynamic>();
@@ -786,7 +786,7 @@ namespace VolunteerMap1
                         
             try
             {
-                bool Judge = Gdp.ChangeTableRecord("Activity", "TID", proID.Text.ToString(), idfields, iddata);
+                bool Judge = gdb.ChangeTableRecord("Activity", "TID", proID.Text.ToString(), idfields, iddata);
                 if (Judge)
                     MessageBox.Show("修改成功！");
                 else

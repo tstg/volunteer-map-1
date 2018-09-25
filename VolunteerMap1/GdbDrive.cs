@@ -114,18 +114,18 @@ namespace VolunteerMap1
         }
     }
 
-    class GdpDrive
+    class GdbDrive
     {
         static string GdpPath = "../../pro.mdb";//数据库文件路径
         private Dictionary<string, IDataset> dict;//数据库字典集
 
         /***************************************************************************
-         * 函数名：GdpDrive
+         * 函数名：GdbDrive
          * 参  数：无
          * 返回值：无
          * 功  能：根据给定的数据库文件路径，链接地理数据库数据库
         ***************************************************************************/
-        public GdpDrive()
+        public GdbDrive()
         {
             try
             {
