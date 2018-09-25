@@ -85,16 +85,17 @@ namespace VolunteerMap1
                     return;
                 }
 
-                Program.form = Program.mainForm;
                 Hide();
+                new MainForm(this).ShowDialog();
+                
             }
         }
              
         public void button_Visitor_Click(object sender, EventArgs e) // 进入游客模式
         {
             Hide();
-            Program.form = Program.mainForm;
             flag = 1;
+            new MainForm(this).ShowDialog();
         }
 
         private void Form_Log_Load(object sender, EventArgs e)

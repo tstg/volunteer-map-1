@@ -7,9 +7,7 @@ namespace VolunteerMap1
 {
     static class Program
     {
-        public static Form form;
-        public static Form_Log form_log;
-        public static MainForm mainForm;
+        public static Form_Log logForm;
         public static GdbDrive gdbDrive;
 
         private static LicenseInitializer m_AOLicenseInitializer = new VolunteerMap1.LicenseInitializer();
@@ -51,15 +49,9 @@ namespace VolunteerMap1
 
             gdbDrive = new GdbDrive();
 
-            form_log = new Form_Log();
-            mainForm = new MainForm(ref form_log);
+            logForm = new Form_Log();
 
-            form = form_log;
-
-            while (form.DialogResult != DialogResult.Cancel)
-            {
-                form.ShowDialog();
-            }
+            logForm.ShowDialog();
             
         }
     }

@@ -30,12 +30,13 @@ namespace VolunteerMap1
         TextBox proID;       // 支教活动ID
 
         IFeature pfeature;
-        GdbDrive gdb = Program.gdbDrive;
+        GdbDrive gdb;
         IFeatureClass pFeatureClass;
         long SiteID = -1;
 
-        public MainForm(ref Form_Log logForm)
+        public MainForm(Form_Log logForm)
         {
+            gdb = Program.gdbDrive;
             this.logForm = logForm;
 
             InitializeComponent();
@@ -424,7 +425,8 @@ namespace VolunteerMap1
         // 退出按键
         private void button_LogOut_Click(object sender, EventArgs e)
         {
-            
+            Console.WriteLine("Log out");
+            Program.logForm.Show();
             Close();
         }
 

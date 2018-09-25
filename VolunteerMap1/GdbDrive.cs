@@ -129,8 +129,9 @@ namespace VolunteerMap1
         {
             try
             {
-                AccessWorkspaceFactory wsf = new AccessWorkspaceFactory();
-                IWorkspace ws = wsf.OpenFromFile(GdpPath, 0);
+                //AccessWorkspaceFactory wsf = new AccessWorkspaceFactory();
+                //IWorkspace ws = wsf.OpenFromFile(GdpPath, 0);
+                IWorkspace ws = GetWorkspace();
                 dict = new Dictionary<string, IDataset>();
 
                 IEnumDataset iterator = ws.get_Datasets(esriDatasetType.esriDTAny);
